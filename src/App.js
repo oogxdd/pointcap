@@ -1,24 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { Button } from './styles/styles.js';
 
-function App() {
+const App = () => {
+  const [isRecording, setRecording] = useState(false)
+
+  const onMove = e => {
+    const x = e.clientX;
+    const y = e.clientY;
+
+    console.log(`Move: x: ${x}, y: ${y}`)
+  }
+
+  const onClick = e => {
+    const x = e.clientX;
+    const y = e.clientY;
+
+    console.log(`Click: x: ${x}, y: ${y}`)
+  }
+
+  useEffect(() => {
+    if (isRecording) {
+      document.body.addEventListener('mousemove', onMove);
+    }
+
+    return () => document.body.removeEventListener('mousemove', onMove);
+  }, [isRecording]);
+
+
+  useEffect(() => {
+    if (isRecording) {
+      document.body.addEventListener('click', onClick);
+    }
+
+    return () => document.body.removeEventListener('click', onClick);
+  }, [isRecording]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {isRecording ?
+        <Button onClick={() => setRecording(false)}>
+          Stop
+        </Button>
+      :
+        <Button onClick={() => setRecording(true)}>
+          Record
+        </Button>
+      }
     </div>
   );
 }
