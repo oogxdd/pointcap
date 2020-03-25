@@ -1,53 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { Button } from './styles/styles.js';
+import React, { useState } from 'react'
+import { useEventListener } from 'hooks'
+import { Button } from 'styles'
 
 const App = () => {
   const [isRecording, setRecording] = useState(false)
 
-  const onMove = e => {
-    const x = e.clientX;
-    const y = e.clientY;
+  const printCoordinates = ({ clientX: x, clientY: y }, type) =>
+    console.log(`${type}: x: ${x}, y: ${y}`)
 
-    console.log(`Move: x: ${x}, y: ${y}`)
-  }
+  const onMove = (e) => printCoordinates(e, 'Move')
+  const onClick = (e) => printCoordinates(e, 'Click')
 
-  const onClick = e => {
-    const x = e.clientX;
-    const y = e.clientY;
-
-    console.log(`Click: x: ${x}, y: ${y}`)
-  }
-
-  useEffect(() => {
-    if (isRecording) {
-      document.body.addEventListener('mousemove', onMove);
-    }
-
-    return () => document.body.removeEventListener('mousemove', onMove);
-  }, [isRecording]);
-
-
-  useEffect(() => {
-    if (isRecording) {
-      document.body.addEventListener('click', onClick);
-    }
-
-    return () => document.body.removeEventListener('click', onClick);
-  }, [isRecording]);
+  useEventListener('mousemove', onMove, isRecording)
+  useEventListener('click', onClick, isRecording)
 
   return (
     <div>
-      {isRecording ?
-        <Button onClick={() => setRecording(false)}>
-          Stop
-        </Button>
-      :
-        <Button onClick={() => setRecording(true)}>
-          Record
-        </Button>
-      }
+      {isRecording ? (
+        <Button onClick={() => setRecording(false)}>Stop</Button>
+      ) : (
+        <Button onClick={() => setRecording(true)}>Record</Button>
+      )}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
