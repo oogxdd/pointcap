@@ -1,7 +1,5 @@
-## rec.live 🎥
-
 <details>
-  <summary>🃁</summary>
+  <summary></summary>
 
   * ⏺  Record
   * ⏹  Stop
