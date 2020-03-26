@@ -2,9 +2,9 @@
   <summary></summary>
 
 
-  ⏺ Record
+  ⏺ — Record
   
-  ⏹ Stop
+  ⏹ — Stop
   
-  ▶️ Play
+  ▶️ — Play
 </details>
