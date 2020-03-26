@@ -1,7 +1,7 @@
 <details>
   <summary></summary>
 
-  *🔴 Record  
-  *🟦 Stop  
-  *🟢 Play
+  * 🔴 Record  
+  * 🟦 Stop  
+  * 🟢 Play
 </details>
