@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <style>
+    path {
+      fill: #8b00ff;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="500">
+  <g transform="translate(240 10) scale(20 20)">
+    <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
+    <path d="M7 2v11h3v9l7-14h-4l4-8z"/>
+    <path d="
+    M 7, 7
+    a 7,7 0 1,1 50,0
+    a 7,7 0 1,1 -50,0
+    "/>
+  </g>
+</svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://veltman.github.io/flubber/build/flubber.min.js"></script>
+<script>
+var pathStrings = Array.from(document.querySelectorAll("path")).map(d => d.getAttribute("d"));
+
+// Remove all the paths except the first
+d3.selectAll("path")
+  .filter(function(d, i) { return i; })
+  .remove();
+
+d3.select("path")
+  .style("display", "block")
+  .call(animate);
+
+function animate(sel) {
+  var start = pathStrings.shift(),
+      end = pathStrings[0];
+
+  pathStrings.push(start);
+
+  sel
+    .datum({ start, end })
+    .transition()
+    .duration(1500)
+    .attrTween("d", function(d){
+      return flubber.interpolate(d.start, d.end, { maxSegmentLength: 0.1 })
+    })
+    .on("end", function() {
+      sel.call(animate);
+    });
+}
+</script>
