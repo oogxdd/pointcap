@@ -1,9 +1,10 @@
 <details>
   <summary></summary>
 
-  ⏺Record
+
+  ⏺ Record
   
-  ⏹Stop
+  ⏹ Stop
   
   ▶️ Play
 </details>
