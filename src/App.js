@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { useEventListener } from 'hooks'
-import { Button } from 'styles'
+import { RecordButton } from 'styles'
 
 const App = () => {
   const [isRecording, setRecording] = useState(false)
@@ -21,15 +21,18 @@ const App = () => {
   useEventListener('mousemove', onMove)
   useEventListener('click', onClick)
 
+  const stop = () => setRecording(false)
+  const record = () => setRecording(true)
+
   return (
-    <div>
-      {isRecording ? (
-        <Button onClick={() => setRecording(false)}>Stop</Button>
-      ) : (
-        <Button onClick={() => setRecording(true)}>Record</Button>
-      )}
-    </div>
+    <RecordButton
+      onClick={isRecording ? stop : record}
+      recording={isRecording}
+    />
   )
 }
 
 export default App
+
+// import { Record, Stop } from 'styles'
+// {isRecording ? <Stop onClick={stop} /> : <Record onClick={record} />}
