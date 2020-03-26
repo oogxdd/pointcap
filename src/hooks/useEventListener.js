@@ -1,12 +1,7 @@
 import { useRef, useEffect } from 'react'
 
 // https://usehooks.com/useEventListener/
-export const useEventListener = (
-  eventName,
-  handler,
-  condition,
-  element = document
-) => {
+export const useEventListener = (eventName, handler, element = document) => {
   const savedHandler = useRef()
 
   useEffect(() => {
@@ -17,8 +12,6 @@ export const useEventListener = (
     const isSupported = element && element.addEventListener
     if (!isSupported) return
 
-    if (!condition) return
-
     const eventListener = (event) => savedHandler.current(event)
 
     element.addEventListener(eventName, eventListener)
@@ -26,5 +19,5 @@ export const useEventListener = (
     return () => {
       element.removeEventListener(eventName, eventListener)
     }
-  }, [eventName, element, condition])
+  }, [eventName, element])
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useEventListener } from 'hooks'
 import { Button } from 'styles'
 
@@ -8,11 +8,18 @@ const App = () => {
   const printCoordinates = ({ clientX: x, clientY: y }, type) =>
     console.log(`${type}: x: ${x}, y: ${y}`)
 
-  const onMove = (e) => printCoordinates(e, 'Move')
-  const onClick = (e) => printCoordinates(e, 'Click')
+  const onMove = useCallback(
+    (e) => isRecording && printCoordinates(e, 'Move'),
+    [isRecording]
+  )
 
-  useEventListener('mousemove', onMove, isRecording)
-  useEventListener('click', onClick, isRecording)
+  const onClick = useCallback(
+    (e) => isRecording && printCoordinates(e, 'Click'),
+    [isRecording]
+  )
+
+  useEventListener('mousemove', onMove)
+  useEventListener('click', onClick)
 
   return (
     <div>
