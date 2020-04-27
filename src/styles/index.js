@@ -38,4 +38,11 @@ export const Stop = styled(Button)`
   border-radius: 12px;
 `
 
-export const Play = styled(Button)``
+export const Play = styled(Button)`
+  box-sizing: border-box;
+  width: 74px;
+  height: 74px;
+  border-style: solid;
+  border-width: 37px 0px 37px 74px;
+  border-color: transparent transparent transparent #56ad89;
+`
