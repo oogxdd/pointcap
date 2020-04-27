@@ -1,5 +1,13 @@
 import styled from 'styled-components'
 
+export const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 export const RecordButton = styled.button`
   width: 100px;
   height: 100px;
@@ -18,6 +26,8 @@ export const RecordButton = styled.button`
     background: hsl(210, 49%, 47%);
     border-radius: 20px;
   `}
+
+  ${(props) => props.notAllowed && `cursor: not-allowed;`}
 `
 
 const Button = styled.button`
@@ -39,10 +49,38 @@ export const Stop = styled(Button)`
 `
 
 export const Play = styled(Button)`
-  box-sizing: border-box;
-  width: 74px;
-  height: 74px;
-  border-style: solid;
-  border-width: 37px 0px 37px 74px;
-  border-color: transparent transparent transparent #56ad89;
+  background: #56ad89;
+  border-radius: 20px;
+`
+
+export const Tip = styled.span`
+  position: fixed;
+  top: calc(50vh + 350px);
+
+  font-family: 'Muli';
+  color: #a9a9b1;
+  letter-spacing: 0.5px;
+
+  opacity: 0;
+  transition: 0.5s;
+  transition-delay: 0.2s;
+
+  ${(props) =>
+    props.show &&
+    `
+    transition-delay: 0s;
+    opacity: 1;
+    top: calc(50vh + 320px);
+  `}
+`
+
+export const AnimationContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #373737;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
