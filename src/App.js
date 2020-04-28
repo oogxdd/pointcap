@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { TweenLite, TimelineMax, Back, Power3 } from 'gsap'
+import { TweenLite, TimelineMax, Back, Power4 } from 'gsap'
 import { useEventListener } from 'hooks'
 import { Container, ShapeWrapper, Tip } from 'styles'
 import useSound from 'use-sound'
@@ -19,7 +19,6 @@ const App = () => {
   const [isRecording, setRecording] = useState(false)
   const [isRecorded, setRecorded] = useState(false)
   const [isPlaying, setPlaying] = useState(false)
-  const [rotateDegree, setRotateDegree] = useState(0)
 
   const [playRecSound] = useSound(recSound)
   const [playStopSound] = useSound(stopSound)
@@ -57,7 +56,7 @@ const App = () => {
       },
       stroke: PLAY_COLOR,
       fill: PLAY_COLOR,
-      ease: Power3.easeOut
+      ease: Power4.easeOut
     })
 
   const morphToCircle = () =>
@@ -78,7 +77,6 @@ const App = () => {
       time: Date.now()
     }
 
-    // console.log(`${type}: x: ${x}, y: ${y}`)
     setActions((actions) => [...actions, action])
   }
 
@@ -87,13 +85,7 @@ const App = () => {
     [isRecording]
   )
 
-  // const onClick = useCallback(
-  //   (e) => isRecording && recordCoordinates(e, 'Click'),
-  //   [isRecording]
-  // )
-
   useEventListener('mousemove', onMove)
-  // useEventListener('click', onClick)
 
   const record = () => {
     setRecording(true)
@@ -103,7 +95,6 @@ const App = () => {
 
     playRecSound()
     morphToSquare()
-    setRotateDegree(90)
   }
 
   const stop = () => {
@@ -116,7 +107,6 @@ const App = () => {
 
       playStopSound()
       morphToTriangle()
-      setRotateDegree(180)
     }
   }
 
@@ -127,7 +117,6 @@ const App = () => {
 
     playPlaySound()
     morphToSquare()
-    setRotateDegree(270)
   }
 
   const onPlayed = () => {
@@ -142,7 +131,6 @@ const App = () => {
 
     playPlayEndSound()
     morphToCircle()
-    setRotateDegree(360)
   }
 
   const onClick = () => {
@@ -165,7 +153,6 @@ const App = () => {
         onClick={onClick}
         style={{
           cursor: isPlaying ? 'none' : 'pointer'
-          // transform: `rotate(${rotateDegree}deg)`
         }}
       >
         <MorphingShape />
@@ -178,16 +165,3 @@ const App = () => {
 }
 
 export default App
-
-// {isRecorded ? (
-//   isPlaying ? (
-//     <RecordButton recording notAllowed />
-//   ) : (
-//     <Play onClick={play} />
-//   )
-// ) : (
-//   <RecordButton
-//     onClick={isRecording ? stop : record}
-//     recording={isRecording}
-//   />
-// )}
