@@ -10,7 +10,8 @@ module.exports = override(
     alias: {
       hooks: path.resolve(__dirname, 'src/hooks/'),
       styles: path.resolve(__dirname, 'src/styles/'),
-      icons: path.resolve(__dirname, 'src/assets/icons')
+      icons: path.resolve(__dirname, 'src/assets/icons'),
+      sounds: path.resolve(__dirname, 'src/assets/sounds')
     }
   }),
   addWebpackModuleRule({
