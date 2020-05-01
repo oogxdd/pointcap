@@ -8,6 +8,7 @@ const path = require('path')
 module.exports = override(
   addWebpackResolve({
     alias: {
+      components: path.resolve(__dirname, 'src/components/'),
       hooks: path.resolve(__dirname, 'src/hooks/'),
       styles: path.resolve(__dirname, 'src/styles/'),
       icons: path.resolve(__dirname, 'src/assets/icons'),

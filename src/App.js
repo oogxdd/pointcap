@@ -1,18 +1,17 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { TweenLite, TimelineMax, Back, Power4 } from 'gsap'
 import { useEventListener } from 'hooks'
-import { Container, ShapeWrapper, Tip } from 'styles'
 import useSound from 'use-sound'
 
-import MorphingShape from './MorphingShape'
-import Player from './Player'
-
-import { RECORD_COLOR, STOP_COLOR, PLAY_COLOR } from 'styles/colors'
+import Landing from 'components/Landing'
+import Player from 'components/Player'
 
 import recSound from 'sounds/VideoRecord.ogg'
 import stopSound from 'sounds/VideoRecordori.ogg'
 import playSound from 'sounds/Lockori.ogg'
 import playEndSound from 'sounds/Unlockori.ogg'
+
+import { RECORD_COLOR, STOP_COLOR, PLAY_COLOR } from 'styles/colors'
 
 const App = () => {
   const [actions, setActions] = useState([])
@@ -148,19 +147,15 @@ const App = () => {
   }
 
   return (
-    <Container>
-      <ShapeWrapper
-        onClick={onClick}
-        style={{
-          cursor: isPlaying ? 'none' : 'pointer'
-        }}
-      >
-        <MorphingShape />
-      </ShapeWrapper>
-
-      <Tip show={isRecording && actions.length < 50}>Move mouse around</Tip>
-      <Player actions={actions} isPlaying={isPlaying} onPlayed={onPlayed} />
-    </Container>
+    <>
+      <Landing
+        isRecording={isRecording}
+        isPlaying={isPlaying}
+        onShapeClick={onClick}
+        showTip={isRecording && actions.length < 50}
+      />
+      <Player isPlaying={isPlaying} onPlayed={onPlayed} actions={actions} />
+    </>
   )
 }
 

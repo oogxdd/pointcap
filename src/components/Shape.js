@@ -1,6 +1,7 @@
 import React from 'react'
+import { ShapeContainer, ShapeWrapper } from 'styles/Shape'
 
-export default () => (
+const Shape = () => (
   <svg
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
@@ -25,4 +26,15 @@ export default () => (
     */}
     <circle id="circle" className="st0" cx={60} cy="64.5" r="17.1" />
   </svg>
+)
+
+export default ({ onClick, isPlaying }) => (
+  <ShapeContainer>
+    <ShapeWrapper
+      onClick={onClick}
+      style={{ cursor: isPlaying ? 'none' : 'pointer' }}
+    >
+      <Shape />
+    </ShapeWrapper>
+  </ShapeContainer>
 )

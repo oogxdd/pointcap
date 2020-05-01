@@ -2,9 +2,8 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   width: 100vw;
-  height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 `
 
@@ -27,8 +26,4 @@ export const Tip = styled.span`
     opacity: 1;
     top: calc(50vh + 320px);
   `}
-`
-
-export const ShapeWrapper = styled.div`
-  transition: 0.2s;
 `
