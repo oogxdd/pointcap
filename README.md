@@ -3,7 +3,9 @@
 
 
   ⏺   Record
+  
   ⏹   Stop
+  
   ▶️   Play
 </details>
 
