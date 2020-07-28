@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 import {
   TodoContainer,
@@ -16,6 +16,7 @@ import {
 // }
 
 export default () => {
+  const inputEl = useRef(null)
   const [todos, setTodos] = useState([])
   const [text, setText] = useState('')
 
@@ -36,17 +37,28 @@ export default () => {
     <TodoContainer>
       <TodoInputWrapper>
         <TodoInput
+          ref={inputEl}
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) =>
             e.key === 'Enter' && addTodo({ text, checked: false })
           }
         />
-        <Button onClick={() => addTodo({ text, checked: false })} />
+        <Button
+          onClick={() =>
+            addTodo({ text: inputEl.current.value, checked: false })
+          }
+        >
+          Add
+        </Button>
       </TodoInputWrapper>
       <TodoList>
         {todos.map((todo) => (
-          <Todo checked={todo.checked} onClick={() => toggleTodo(todo)}>
+          <Todo
+            checked={todo.checked}
+            onClick={() => toggleTodo(todo)}
+            key={todo.text}
+          >
             {todo.text}
           </Todo>
         ))}

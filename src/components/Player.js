@@ -6,14 +6,16 @@ function timeout(ms) {
 }
 
 export default ({ actions, isPlaying, onPlayed }) => {
-  console.log(isPlaying)
   const [xCoordinate, setX] = useState(actions[0] ? actions[0].x : 0)
   const [yCoordinate, setY] = useState(actions[0] ? actions[0].y : 0)
 
   const draw = async () => {
     for await (let [index, action] of actions.entries()) {
-      setX(action.x)
-      setY(action.y)
+      if (action.x) setX(action.x)
+      if (action.y) setY(action.y)
+      if (action.scroll) window.scrollTo(0, action.scroll)
+      if (action.target && action.target.click) action.target.click()
+      if (action.input) action.input.value = action.value
 
       let timeDelta = 0
 

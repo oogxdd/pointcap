@@ -68,11 +68,42 @@ const App = () => {
       ease: Back.easeInOut
     })
 
-  const recordCoordinates = ({ clientX: x, clientY: y }, type) => {
+  const recordCoordinates = ({ clientX: x, clientY: y }, type = 'Move') => {
     const action = {
       type,
       x,
       y,
+      time: Date.now()
+    }
+
+    setActions((actions) => [...actions, action])
+  }
+
+  const recordScroll = (e, type = 'Scroll') => {
+    const action = {
+      type,
+      scroll: window.scrollY,
+      time: Date.now()
+    }
+
+    setActions((actions) => [...actions, action])
+  }
+
+  const recordClick = (target, type = 'Click') => {
+    const action = {
+      type,
+      target,
+      time: Date.now()
+    }
+
+    setActions((actions) => [...actions, action])
+  }
+
+  const recordKeyUp = (input, type = 'KeyUp') => {
+    const action = {
+      type,
+      input,
+      value: input.value,
       time: Date.now()
     }
 
@@ -84,7 +115,24 @@ const App = () => {
     [isRecording]
   )
 
+  const onScroll = useCallback(
+    (e) => isRecording && recordScroll(e, 'Scroll'),
+    [isRecording]
+  )
+
+  const onClick = useCallback(
+    (e) => isRecording && recordClick(e.target, 'Click'),
+    [isRecording]
+  )
+
+  const onKeyUp = useCallback((e) => isRecording && recordKeyUp(e.target), [
+    isRecording
+  ])
+
   useEventListener('mousemove', onMove)
+  useEventListener('scroll', onScroll)
+  useEventListener('click', onClick)
+  useEventListener('keyup', onKeyUp)
 
   const record = () => {
     setRecording(true)
@@ -132,7 +180,7 @@ const App = () => {
     morphToCircle()
   }
 
-  const onClick = () => {
+  const toggleRecording = () => {
     if (!isRecorded) {
       if (isRecording) {
         stop()
@@ -151,7 +199,7 @@ const App = () => {
       <Landing
         isRecording={isRecording}
         isPlaying={isPlaying}
-        onShapeClick={onClick}
+        onShapeClick={toggleRecording}
         showTip={isRecording && actions.length < 50}
       />
       <Player isPlaying={isPlaying} onPlayed={onPlayed} actions={actions} />
