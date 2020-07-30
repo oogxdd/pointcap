@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { TweenLite, TimelineMax, Back, Power4 } from 'gsap'
 import { useEventListener } from 'hooks'
 import useSound from 'use-sound'
+import MicRecorder from 'mic-recorder-to-mp3'
 
 import Landing from 'components/Landing'
 import Player from 'components/Player'
@@ -13,8 +14,13 @@ import playEndSound from 'sounds/Unlockori.ogg'
 
 import { RECORD_COLOR, STOP_COLOR, PLAY_COLOR } from 'styles/colors'
 
+const recorder = new MicRecorder({
+  bitRate: 128
+})
+
 const App = () => {
   const [actions, setActions] = useState([])
+  const [audio, setAudio] = useState(undefined)
   const [isRecording, setRecording] = useState(false)
   const [isRecorded, setRecorded] = useState(false)
   const [isPlaying, setPlaying] = useState(false)
@@ -136,6 +142,7 @@ const App = () => {
 
   const record = () => {
     setRecording(true)
+    recorder.start()
 
     document.title = 'Recording...'
     document.getElementById('favicon').href = '/icons/stop.svg'
@@ -148,6 +155,20 @@ const App = () => {
     if (actions.length > 0) {
       setRecording(false)
       setRecorded(true)
+      recorder
+        .stop()
+        .getMp3()
+        .then(([buffer, blob]) => {
+          // do what ever you want with buffer and blob
+          // Example: Create a mp3 file and play
+          const file = new File(buffer, 'me-at-thevoice.mp3', {
+            type: blob.type,
+            lastModified: Date.now()
+          })
+
+          const player = new Audio(URL.createObjectURL(file))
+          setAudio(player)
+        })
 
       document.title = 'Play'
       document.getElementById('favicon').href = '/icons/play.svg'
@@ -159,6 +180,9 @@ const App = () => {
 
   const play = () => {
     setPlaying(true)
+    if (audio) {
+      audio.play()
+    }
 
     document.title = 'Playing...'
 
@@ -172,6 +196,7 @@ const App = () => {
     // Erase previous recording
     setRecorded(false)
     setActions([])
+    setAudio(undefined)
 
     document.title = 'Pointcap'
     document.getElementById('favicon').href = '/icons/rec.svg'
