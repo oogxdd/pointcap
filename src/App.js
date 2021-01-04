@@ -135,10 +135,38 @@ const App = () => {
     isRecording
   ])
 
+  const onInputFocus = useCallback(
+    (e) =>
+      isRecording &&
+      setActions((actions) => [
+        ...actions,
+        {
+          type: 'InputFocus',
+          time: Date.now()
+        }
+      ]),
+    [isRecording]
+  )
+
+  const onInputBlur = useCallback(
+    (e) =>
+      isRecording &&
+      setActions((actions) => [
+        ...actions,
+        {
+          type: 'InputBlur',
+          time: Date.now()
+        }
+      ]),
+    [isRecording]
+  )
+
   useEventListener('mousemove', onMove)
   useEventListener('scroll', onScroll)
   useEventListener('click', onClick)
   useEventListener('keyup', onKeyUp)
+  useEventListener('focus', onInputFocus, document.getElementById('input'))
+  useEventListener('blur', onInputBlur, document.getElementById('input'))
 
   const record = () => {
     setRecording(true)

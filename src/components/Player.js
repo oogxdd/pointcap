@@ -17,6 +17,14 @@ export default ({ actions, isPlaying, onPlayed }) => {
       if (action.target && action.target.click) action.target.click()
       if (action.input) action.input.value = action.value
 
+      if (action.type === 'InputFocus') {
+        document.getElementById('input').focus()
+      }
+
+      if (action.type === 'InputBlur') {
+        document.getElementById('input').blur()
+      }
+
       let timeDelta = 0
 
       const isLastAction = index === actions.length - 1
