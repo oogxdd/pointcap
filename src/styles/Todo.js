@@ -17,5 +17,7 @@ export const TodoInputWrapper = styled.div`
 `
 export const TodoInput = styled.input``
 export const TodoList = styled.ul``
-export const Todo = styled.li``
+export const Todo = styled.li`
+  ${(props) => props.checked && 'text-decoration: line-through;'}
+`
 export const Button = styled.button``

@@ -27,9 +27,17 @@ export default () => {
 
   const toggleTodo = (todo) => {
     if (todo.checked) {
-      // uncheck
+      setTodos(
+        todos.map((i) =>
+          i.text === todo.text ? { ...todo, checked: false } : i
+        )
+      )
     } else {
-      // check
+      setTodos(
+        todos.map((i) =>
+          i.text === todo.text ? { ...todo, checked: true } : i
+        )
+      )
     }
   }
 
@@ -37,6 +45,7 @@ export default () => {
     <TodoContainer>
       <TodoInputWrapper>
         <TodoInput
+          id="input"
           ref={inputEl}
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -53,11 +62,11 @@ export default () => {
         </Button>
       </TodoInputWrapper>
       <TodoList>
-        {todos.map((todo) => (
+        {todos.map((todo, index) => (
           <Todo
+            key={`${index}-${todo.text}`}
             checked={todo.checked}
             onClick={() => toggleTodo(todo)}
-            key={todo.text}
           >
             {todo.text}
           </Todo>
